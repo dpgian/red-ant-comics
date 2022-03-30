@@ -1,56 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import './styles/main.css';
+import './styles/normalize.css';
+import { useDispatch } from 'react-redux';
+import { fetchComics } from './features/comics/comicsSlice'
+import Comics from './features/comics/Comics';
+import Sidebar from './features/sidebar/Sidebar';
 
 function App() {
+
+  /*
+    Toggle favourite class
+  */
+  const [showFavourite, setShowFavourite] = useState(false) 
+
+  const ToggleFavouriteClass = () => {
+    setShowFavourite(!showFavourite)
+  }
+
+  /*
+    Fetch data from API as soon as App load
+  */
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchComics())
+  }, [dispatch])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+        <header className="site-header">
+            <h1 className="site-heading">Red Ant Comics</h1>
+            <button className="favourites-toggle js-favourites-toggle" onClick={ToggleFavouriteClass}></button>
+        </header>
+      
+        <Comics />
+
+        <Sidebar showFavourite={showFavourite} ToggleFavouriteClass={ToggleFavouriteClass} />
+            
     </div>
   );
 }
