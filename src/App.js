@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { fetchComics } from './features/comics/comicsSlice'
 import Comics from './features/comics/Comics';
 import Sidebar from './features/sidebar/Sidebar';
+import Header from './features/header/Header';
 
 function App() {
 
@@ -28,10 +29,7 @@ function App() {
 
   return (
     <div className="App">
-        <header className="site-header">
-            <h1 className="site-heading">Red Ant Comics</h1>
-            <button className="favourites-toggle js-favourites-toggle" onClick={ToggleFavouriteClass}></button>
-        </header>
+        <Header ToggleFavouriteClass={ToggleFavouriteClass} />
       
         <Comics />
 
